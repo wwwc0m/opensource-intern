@@ -49,7 +49,7 @@
 
 <details>
   <summary>以下为供参考的任务流程图</summary>
-  
+
   ```mermaid
   graph TD
       Browser["🖥️ 用户浏览器
@@ -62,7 +62,7 @@
   已用 Sign 记录")]
       FileServer["📦 文件服务
   ISO / 大文件存储"]
-  
+
       Browser -->|"HTTPS 请求
   携带 token + sign"| Nginx
       Nginx -->|"内部子请求
@@ -83,28 +83,28 @@
       participant Auth as PoW 验证后端
       participant Redis as Redis
       participant FS as 文件服务
-  
+
       User->>FE: 点击下载大文件（如 .iso）
       FE-->>User: 弹出验证窗口，选择模式\nA: 绑定IP（长效）/ B: 通用链接（短效）
       User->>FE: 确认 IP 与目标路径
-  
+
       Note over FE: 构造签名字符串\n"{ip}|{path}|{timestamp}|"
-  
+
       loop PoW 计算（Web Crypto API）
           FE->>FE: SHA-256("{签名字符串}{cnt}")\n检查哈希前 N 位是否全为 0
       end
-  
+
       FE-->>User: 生成下载 URL\n?token={base64}&sign={hash}\n展示一键复制 / 立即访问
-  
+
       User->>Nginx: GET /ubuntu.iso?token=...&sign=...
-  
+
       Nginx->>Auth: 内部子请求 /verify_pow\n（X-Original-URI, X-Real-IP）
-  
+
       Auth->>Auth: ① token / sign 参数是否存在？
       Auth->>Auth: ② sign 是否满足 PoW 难度？
       Auth->>Auth: ③ token 中路径与请求路径是否匹配？
       Auth->>Auth: ④ 时间戳是否在有效期内？
-  
+
       alt 模式 B：通用链接
           Auth->>Redis: 查询 sign 使用次数
           Redis-->>Auth: 返回计数
@@ -113,7 +113,7 @@
       else 模式 A：绑定 IP
           Auth->>Auth: ⑤ 请求 IP 与 token 中 IP 是否一致？
       end
-  
+
       alt 全部校验通过
           Auth-->>Nginx: HTTP 200 OK
           Nginx->>FS: 转发下载请求
