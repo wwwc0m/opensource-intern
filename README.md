@@ -11,3 +11,4 @@
 | [为 Syzkaller 添加 loongarch64 架构支持](./openatom_club_syzkaller_for_loongarch.md) | Go、C/C++、汇编 | 120 小时 / 8 周 |
 | [基于多级判定策略的漏洞影响范围智能化判定](./openatom_club_vulnerability_downstream_impact.md) | Python、C/C++、Golang | 3 个月 |
 | [面向华科开放原子俱乐部的开源实习管理系统](./openatom_club_ossintern_web.md) | 不限（建议 Python / TS / Go） | 88 小时 / 6 周 |
+| [基于 LLM 与代码分析的 OpenHarmony 智能漏洞检测工具](./openatom_club_LLM_vulnerability_detection.md) | Python、C/C++ | 88 小时 / 6 周 |
